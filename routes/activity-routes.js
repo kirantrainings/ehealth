@@ -2,7 +2,8 @@ var router = require('express').Router();
 var keys = require('../configs/keys');
 var mysql = require('mysql');
 var express = require('express');
-
+var heartrate = require('mongoose').model('activitylog');
+var userdetails = require('mongoose').model('userdetail');
 var activities;
 
 var connection = mysql.createPool({
@@ -41,11 +42,50 @@ connection.getConnection((err, con)=>{
 
 
 
-router.get('/', authCheck, (req, res) => {
-	res.render('activity', {
-		user: req.user,
-		activities:activities
-	});
+// router.get('/', authCheck, (req, res) => {
+
+// 	res.render('activity', {
+// 		user: req.user,
+//         activities:activities,
+//         users:[]
+// 	}); 
+// });
+
+
+router.get('/heartratedata/:id?',(req,res)=>{
+    var username =req.params.id?req.params.id:'Rasha';
+    console.log(username);
+    let time =new Date().getTime();
+    
+    let query = 
+    {
+        $gte:time-2000,
+        $lte:time
+    };
+
+  //  console.log(query);
+    heartrate.find({username:username,timestamp:query}).
+    then(data=>{
+    //    console.log(data);
+        res.json(data)
+    })
+    .catch(err=>{
+        res.json({error:err});
+    })
 });
+
+router.get('/',authCheck,(req,res)=>{
+    let query = '';
+  //  let userinfo = req.body.userdetails;
+            userdetails.find({role:'Patient'})
+            .then(result=>{
+                console.log(result);
+                res.render('activity',{user:req.user,users:result});
+            }).catch(err=>{
+                res.render('login',{user:userinfo});
+            })
+})
+
+
 
 module.exports = router;

@@ -2,7 +2,7 @@ const PORT = process.env.PORT || 3000;
 var express = require('express');
 var cookieSession = require('cookie-session');
 var passport = require('passport');
-
+var mongodb = require('./mongo')();
 // importing routes
 var authRoutes = require('./routes/auth-routes');
 var passportSetup = require('./configs/passport-setup');
