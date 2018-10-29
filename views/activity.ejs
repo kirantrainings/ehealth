@@ -46,21 +46,28 @@
       <div class="jumbotron">
         <div class="container">
         <div class="row">
-            <div class="col-sm-3">
+            <div class="col-sm-12">
             <table class="table table-hover table-striped">
                 <thead>
                     <th>S.No</th>
                     <th>Name</th>
                     <th>Role</th>
+                    <th>Exercise per Day</th>
+                    <th>Exercise per Week</th>
+                    <th>Exercise per Month</th>
+                    <th>Recommended Time</th>
                 <thead>
                 <tbody>
                 <% if(users){ %>
                     <% for(var i=0; i < users.length; i++) { %>
                     <tr class="selectuser">
                     <td><%= i+1 %></td>
-                    <td><%= users[i].firstname %></td>
-                    <td><%= users[i].lastname %></td>
+                    <td><%= users[i].firstname %>,<%= users[i].lastname %></td>
                     <td><%= users[i].role %></td>
+                    <td><%= users[i].ex_day %></td>
+                    <td><%= users[i].ex_week %></td>
+                    <td><%= users[i].ex_month %></td>
+                    <td><%= users[i].ex_time %></td>
                     </tr>
                     <% } } %>
 
@@ -68,11 +75,7 @@
 
             </table>
             </div>
-         <div class="col-sm-6">
-            <div class="row">
-                <button id="btnHeartRate" class="btn btn-primary">Heart Rate</button>
-                <button id="btnHeartRate" class="btn btn-primary">Walking</button>
-            </div>
+         <div class="col-sm-12">
             <div id="container"></div>
          </div>
          </div>
@@ -134,12 +137,15 @@
                 text: 'Heart Rate'
             },
             xAxis: {
+               title: {
+                    text: 'Time'
+                },
                 type: 'datetime',
                 tickPixelInterval: 150
             },
             yAxis: {
                 title: {
-                    text: 'Value'
+                    text: 'Number of Beats'
                 },
                 plotLines: [{
                     value: 0,
@@ -161,7 +167,7 @@
                 enabled: false
             },
             series: [{
-                name: 'Random data',
+                name: 'Heart rate per second',
                  data: (function() {
                      $.get('/activity/heartratedata').
                      then(result=>{

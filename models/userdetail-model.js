@@ -9,7 +9,14 @@ var userSchema = new Schema({
     "firstname" : String, 
     "lastname" : String,
     "profilepic":String,
-    "organization":String
+    "organisation":String,
+    "email":String,
+    latitude:String,
+    longitude:String,
+    ex_day:String,
+    ex_month:String,
+    ex_week:String,
+    ex_time:String
 });
 
 var User = mongoose.model('userdetail', userSchema);
