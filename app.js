@@ -3,6 +3,7 @@ var express = require('express');
 var cookieSession = require('cookie-session');
 var passport = require('passport');
 var mongodb = require('./mongo')();
+var bodyParser = require('body-parser');
 // importing routes
 var authRoutes = require('./routes/auth-routes');
 var passportSetup = require('./configs/passport-setup');
@@ -26,7 +27,10 @@ var app = express();
 app.set('view engine', 'ejs');
 
 app.use(express.static('views'));
-
+app.use(bodyParser.urlencoded({ extended: false }))
+ 
+// parse application/json
+app.use(bodyParser.json())
 // set up session cookies
 app.use(cookieSession({
 	maxAge: 24*60*60*1000,

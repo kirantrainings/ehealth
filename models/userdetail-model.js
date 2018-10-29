@@ -7,7 +7,9 @@ var userSchema = new Schema({
     "doctor" : String, 
     "researcher" : String, 
     "firstname" : String, 
-    "lastname" : String
+    "lastname" : String,
+    "profilepic":String,
+    "organization":String
 });
 
 var User = mongoose.model('userdetail', userSchema);

@@ -54,7 +54,7 @@ connection.getConnection((err, con)=>{
 
 router.get('/heartratedata/:id?',(req,res)=>{
     var username =req.params.id?req.params.id:'Rasha';
-    console.log(username);
+    //console.log(username);
     let time =new Date().getTime();
     
     let query = 
@@ -75,11 +75,24 @@ router.get('/heartratedata/:id?',(req,res)=>{
 });
 
 router.get('/',authCheck,(req,res)=>{
-    let query = '';
-  //  let userinfo = req.body.userdetails;
-            userdetails.find({role:'Patient'})
+    let query = {
+        role:'Patient',
+    };
+    
+
+   let userinfo = req._passport.session;
+   if(userinfo.role=='Researcher'){
+       query.researcher = userinfo.loggedInDetails.username;
+   }
+   else if(userinfo.role=='Doctor'){
+    query.doctor = userinfo.loggedInDetails.username;
+   }
+   else{
+       query.username =userinfo.loggedInDetails.username;
+   }
+            userdetails.find(query)
             .then(result=>{
-                console.log(result);
+              //  console.log(result);
                 res.render('activity',{user:req.user,users:result});
             }).catch(err=>{
                 res.render('login',{user:userinfo});
