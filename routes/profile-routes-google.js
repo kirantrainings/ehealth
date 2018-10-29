@@ -5,7 +5,7 @@ var authCheck = (req, res, next) => {
 		res.redirect('/auth/login');
 	}
 	else{
-	   userdetails.findOne({username:req.user.id})
+		userdetails.findOne({username:req.user.userid})
 	   .then(result=>{
 		   req._passport.session.loggedInDetails = result;
 		next();
