@@ -13,5 +13,8 @@ git clone https://github.com/kirantrainings/ehealth.git
 
 5. To Run the Heart rate graph  open another command prompt in the same path. run the following command. 
    node data-gen.js
+ 
+ Open the browser preferably in private window and type http://localhost:3000
+ 
 
 6. In case if you find any errors in the command prompt. press ctrl+c and run the commands 4 & 5 and again
