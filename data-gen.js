@@ -22,7 +22,7 @@ function getRandomInt(min, max) {
         activityId: '5bd53585f3f6417585a49e15'
     });
     dataModel.save().then(result => {
-        console.log(result);
+       // console.log(result);
     }).catch(err => {
         console.log(err);
     })
